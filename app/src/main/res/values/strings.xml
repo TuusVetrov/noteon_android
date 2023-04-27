@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">NoteOn</string>
+
+    <string name="email_text_input_hint">Email</string>
+    <string name="password_text_input_hint">Пароль</string>
+    <string name="login_text_view">Добро пожаловать</string>
+    <string name="continue_button">Продолжить</string>
+    <string name="forgot_password_button_text">Забыли пароль?</string>
+    <string name="create_new_account_text">Создать новый аккаунт</string>
+
+    <string name="menu_item_notes">Заметки</string>
+    <string name="menu_item_search">Поиск</string>
+    <string name="menu_item_setting">Настройки</string>
+
+    <string name="message_password_mismatched">Пароль и подтверждение пароля не совпадают</string>
+
+    <string name="error_message_email_invalid">Проверьте корректность вашего email</string>
+    <string name="error_message_password_invalid">Пароль должен содержать от 8 до 50 символов</string>
+    <string name="error_loading_title">Не удалось войти в аккаунт</string>
+    <string name="search_bar_hint">Поиск по заметкам</string>
+    <string name="search_view_hint">penis</string>
+
+    <string name="text_no_connectivity">Отсутствует подключение к интернету</string>
+    <string name="text_connectivity">Снова онлайн</string>
+
+    <string name="hint_field_title">Заголовок</string>
+    <string name="hint_field_body">Тело заметки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

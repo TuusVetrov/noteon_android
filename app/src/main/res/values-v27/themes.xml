@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Base.V27.Theme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:navigationBarColor">@color/white_50pc</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

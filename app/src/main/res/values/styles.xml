@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
+    <style name="TextAppearance" parent="android:TextAppearance" />
+
+    <style name="Theme.NoteOn.ShapeAppearanceBigButton"
+        parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="Theme.NoteOn.BigButton"
+        parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/Theme.NoteOn.ShapeAppearanceBigButton</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textAppearance">
+            @style/TextAppearance.T1
+        </item>
+    </style>
+
+    <style name="Theme.NoteOn.TextButton"
+        parent="Widget.Material3.Button.TextButton">
+        <item name="shapeAppearance">@style/Theme.NoteOn.ShapeAppearanceBigButton</item>
+        <item name="android:textAppearance">
+            @style/TextAppearance.H5
+        </item>
+    </style>
+
+    <style name="Theme.NoteOn.OutlinedButton"
+        parent="Widget.Material3.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/Theme.NoteOn.ShapeAppearanceBigButton</item>
+        <item name="android:textAppearance">
+            @style/TextAppearance.H5
+        </item>
+    </style>
+
+    <style name="Theme.NoteOn.TextInputLayout"
+        parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:textAppearance">
+            @style/TextAppearance.T1
+        </item>
+        <item name="hintTextAppearance">
+            @style/TextAppearance.T3
+        </item>
+    </style>
+</resources>

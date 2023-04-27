@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/notesScreen"
+        android:enabled="true"
+        android:icon="@drawable/ic_note_24"
+        android:title="@string/menu_item_notes"/>
+    <item
+        android:id="@+id/searchScreen"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_24"
+        android:title="@string/menu_item_search"/>
+    <item
+        android:id="@+id/settingsScreen"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings_24"
+        android:title="@string/menu_item_setting"/>
+</menu>

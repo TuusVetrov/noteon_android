@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.H1">
+        <item name="android:textSize">@dimen/text_h1_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_h1_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="TextAppearance.H2">
+        <item name="android:textSize">@dimen/text_h2_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_h2_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextAppearance.H3">
+        <item name="android:textSize">@dimen/text_h3_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_h3_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="TextAppearance.H4">
+        <item name="android:textSize">@dimen/text_h4_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_h4_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextAppearance.H5">
+        <item name="android:textSize">@dimen/text_h5_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_h5_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextAppearance.T1">
+        <item name="android:textSize">@dimen/text_t1_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_t1_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="TextAppearance.T2">
+        <item name="android:textSize">@dimen/text_t2_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_t2_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="TextAppearance.T3">
+        <item name="android:textSize">@dimen/text_t3_size</item>
+        <item name="android:lineSpacingMultiplier">@dimen/text_t3_line_height_multiplier</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+</resources>

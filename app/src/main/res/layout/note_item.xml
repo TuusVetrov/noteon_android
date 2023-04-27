@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:focusable="true"
+    android:clickable="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_100">
+
+        <TextView
+            android:id="@+id/noteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/noteDate"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Title"
+            android:textAppearance="@style/TextAppearance.H4"
+            android:textColor="?android:textColorPrimary" />
+
+        <TextView
+            android:id="@+id/noteDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="00:23" />
+
+        <TextView
+            android:id="@+id/noteBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noteTitle"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/notePinState"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Note body"
+            android:textAppearance="@style/TextAppearance.T2"
+            android:textColor="?android:textColorSecondary" />
+
+        <CheckBox
+            android:id="@+id/notePinState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noteDate"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/sl_pin_24dp"
+            android:minWidth="24dp"
+            android:minHeight="24dp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
