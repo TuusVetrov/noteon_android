@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.noteon.core.connectivity.ConnectionState
 import ru.noteon.core.connectivity.ConnectivityObserver
+import ru.noteon.core.task.NoteTask
 import ru.noteon.core.task.TaskManager
 import ru.noteon.core.task.TaskState
 import ru.noteon.core.token.TokenManager
@@ -27,12 +28,36 @@ class NotesViewModel @Inject constructor(
     val uiState: StateFlow<NotesState> = _uiState
 
     private var syncJob: Job? = null
+    private var job: Job? = null
 
     init {
         checkUserSession()
         observeNotes()
         syncNotes()
         observeConnectivity()
+    }
+
+    fun searchNotes(query: String) {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    searchNotes = uiState.value.notes.filter {
+                                it.title.contains(query, true) ||
+                                it.body.contains(query, true)
+                    }
+                )
+            }
+        }
+    }
+
+    fun restoreSearchNotes() {
+        viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    searchNotes = uiState.value.notes
+                )
+            }
+        }
     }
 
     fun syncNotes() {
@@ -77,6 +102,61 @@ class NotesViewModel @Inject constructor(
             }
         }
     }
+
+    fun delete(noteId: String) {
+        job?.cancel()
+        job = viewModelScope.launch {
+            val response = noteRepository.deleteNote(noteId)
+
+            response.onSuccess { noteId ->
+                if (!noteRepository.isTemporaryNote(noteId)) {
+                    scheduleNoteDelete(noteId)
+                }
+            }.onFailure { message ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        error = message,
+                    )
+                }
+            }
+        }
+    }
+
+    fun togglePin(noteId: String, isPinned: Boolean) {
+        job?.cancel()
+        job = viewModelScope.launch {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isLoading = true
+                )
+            }
+
+            val response = noteRepository.pinNote(noteId, !isPinned)
+
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isLoading = false,
+                )
+            }
+
+            response.onSuccess { noteId ->
+                if (!noteRepository.isTemporaryNote(noteId)) {
+                    scheduleNoteUpdatePin(noteId)
+                }
+            }.onFailure { message ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        error = message,
+                    )
+                }
+            }
+        }
+    }
+    private fun scheduleNoteDelete(noteId: String) =
+        taskManager.scheduleTask(NoteTask.delete(noteId))
+
+    private fun scheduleNoteUpdatePin(noteId: String) =
+        taskManager.scheduleTask(NoteTask.pin(noteId))
 
     private fun observeNotes() {
         noteRepository.getAllNotes()

@@ -51,6 +51,6 @@ class HomeFragment : Fragment() {
         } else {
             R.id.action_homeFragment_to_listNotesFragment
         }
-        findNavController().navigate(R.id.action_homeFragment_to_noteEditFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_listNotesFragment)
     }
 }

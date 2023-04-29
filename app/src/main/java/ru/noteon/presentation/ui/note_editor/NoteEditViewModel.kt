@@ -1,5 +1,6 @@
 package ru.noteon.presentation.ui.note_editor
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,7 @@ import ru.noteon.core.task.NoteTask
 import ru.noteon.core.task.TaskManager
 import ru.noteon.data.repository.LocalNoteRepository
 import ru.noteon.domain.model.NoteModel
+import ru.noteon.presentation.ui.list_notes.CREATE_NOTE_TAG
 import ru.noteon.utils.validators.NoteValidator
 import javax.inject.Inject
 
@@ -34,7 +36,9 @@ class NoteEditViewModel @AssistedInject constructor(
     private lateinit var currentNote: NoteModel
 
     init {
-        loadNote()
+        if (noteId != CREATE_NOTE_TAG) {
+            loadNote()
+        }
     }
 
     fun setTitle(title: String) {
@@ -83,8 +87,8 @@ class NoteEditViewModel @AssistedInject constructor(
     }
 
     fun save() {
-        val title = uiState.value.title?.trim() ?: return
-        val body = uiState.value.body?.trim() ?: return
+        val title = uiState.value.title?.trim() ?: ""
+        val body = uiState.value.body?.trim() ?: ""
 
         job?.cancel()
         job = viewModelScope.launch {
@@ -94,30 +98,43 @@ class NoteEditViewModel @AssistedInject constructor(
                 )
             }
 
-            val response = repository.updateNote(noteId, title, body)
+            if (noteId != CREATE_NOTE_TAG) {
+                val response = repository.updateNote(noteId, title, body)
 
-            _uiState.update { currentState ->
-                currentState.copy(
-                    isLoading = false
-                )
-            }
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        isLoading = false
+                    )
+                }
 
-            response.onSuccess { noteId ->
-                if (repository.isTemporaryNote(noteId)) {
+                response.onSuccess { noteId ->
+                    if (repository.isTemporaryNote(noteId)) {
+                        scheduleNoteCreate(noteId)
+                    } else {
+                        scheduleNoteUpdate(noteId)
+                    }
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            finished = true
+                        )
+                    }
+                }.onFailure { message ->
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            error = message,
+                        )
+                    }
+                }
+            } else {
+                val response = repository.addNote(title, body)
+                response.onSuccess { noteId ->
                     scheduleNoteCreate(noteId)
-                } else {
-                    scheduleNoteUpdate(noteId)
-                }
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        finished = true
-                    )
-                }
-            }.onFailure { message ->
-                _uiState.update { currentState ->
-                    currentState.copy(
-                        error = message,
-                    )
+                }.onFailure { message ->
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            error = message,
+                        )
+                    }
                 }
             }
         }
@@ -204,7 +221,7 @@ class NoteEditViewModel @AssistedInject constructor(
 
             _uiState.update { currentState ->
                 currentState.copy(
-                    showSave = isValid && !areOldAndUpdatedNoteSame
+                    isSaving = isValid && !areOldAndUpdatedNoteSame
                 )
             }
         } catch (error: Throwable) {

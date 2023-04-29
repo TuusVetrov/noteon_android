@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.onEach
 import ru.noteon.R
 import ru.noteon.core.utils.extensions.hiltMainNavGraphViewModels
 import ru.noteon.core.utils.extensions.setError
+import ru.noteon.core.utils.extensions.snackBar
 import ru.noteon.core.utils.extensions.toStringOrEmpty
 import ru.noteon.databinding.FragmentSignUpBinding
 import ru.noteon.presentation.ui.login.LoginState
@@ -77,14 +78,8 @@ class SignUpFragment : Fragment() {
 
         val errorMessage = state.errorMessage
         if (errorMessage != null) {
-            val message = getString(R.string.error_loading_title) + "\n" + errorMessage
-            view?.let {
-                Snackbar.make(it, message, Snackbar.LENGTH_SHORT).apply {
-                    setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.light_error))
-                    animationMode = Snackbar.ANIMATION_MODE_FADE
-                    show()
-                }
-            }
+            val message = getString(R.string.error_signup_title) + "\n" + errorMessage
+            snackBar(message)
         }
         signUpViewModel.clearError()
     }

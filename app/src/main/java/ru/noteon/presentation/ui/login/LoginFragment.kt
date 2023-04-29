@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ru.noteon.R
 import ru.noteon.core.utils.extensions.hiltMainNavGraphViewModels
+import ru.noteon.core.utils.extensions.snackBar
 import ru.noteon.databinding.FragmentLoginBinding
 
 @AndroidEntryPoint
@@ -91,13 +92,7 @@ class LoginFragment : Fragment() {
         val errorMessage = state.errorMessage
         if (errorMessage != null) {
             val message = getString(R.string.error_loading_title) + "\n" + errorMessage
-            view?.let {
-                Snackbar.make(it, message, Snackbar.LENGTH_SHORT).apply {
-                    setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.light_error))
-                    animationMode = Snackbar.ANIMATION_MODE_FADE
-                    show()
-                }
-            }
+            snackBar(message)
         }
         loginViewModel.clearError()
     }

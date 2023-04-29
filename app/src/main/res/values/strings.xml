@@ -17,6 +17,7 @@
     <string name="error_message_email_invalid">Проверьте корректность вашего email</string>
     <string name="error_message_password_invalid">Пароль должен содержать от 8 до 50 символов</string>
     <string name="error_loading_title">Не удалось войти в аккаунт</string>
+    <string name="error_signup_title">Не удалось создать аккаунт</string>
     <string name="search_bar_hint">Поиск по заметкам</string>
     <string name="search_view_hint">penis</string>
 
@@ -25,6 +26,21 @@
 
     <string name="hint_field_title">Заголовок</string>
     <string name="hint_field_body">Тело заметки</string>
+
+    <string name="menu_pin">Закрепить</string>
+    <string name="menu_delete">Удалить</string>
+    <string name="menu_done">Готово</string>
+    <string name="menu_undo">Отменить</string>
+    <string name="menu_redo">Повторить</string>
+
+    <string name="alert_delete_title">Удалить?</string>
+    <string name="alert_delete_message">Уверены, что хотите удалить заметку?</string>
+    <string name="alert_positive">Да</string>
+    <string name="alert_negative">Нет</string>
+
+    <string name="extended_fab_content_desc">Создание новой заметки</string>
+    <string name="extended_fab_label">Создать</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

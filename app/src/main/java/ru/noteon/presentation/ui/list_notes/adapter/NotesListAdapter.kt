@@ -12,12 +12,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NotesListAdapter(
+    private val onPinClick: (NoteModel) -> Unit,
     private val onNoteClick: (NoteModel) -> Unit
 ): RecyclerView.Adapter<NotesListAdapter.NoteViewHolder>() {
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
     fun submitList(notes: List<NoteModel>) {
         differ.submitList(notes)
+    }
+
+    fun getNoteID(position: Int): String {
+        return differ.currentList.elementAt(position).id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = NoteViewHolder(
@@ -31,18 +36,23 @@ class NotesListAdapter(
     override fun getItemCount() = differ.currentList.size
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(differ.currentList[position], onNoteClick)
+        holder.bind(differ.currentList[position], onPinClick, onNoteClick)
     }
 
     inner class NoteViewHolder(
         private val binding: NoteItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: NoteModel, onNoteClick: (NoteModel) -> Unit) {
+        fun bind(
+            note: NoteModel,
+            onPinClick: (NoteModel) -> Unit,
+            onNoteClick: (NoteModel) -> Unit,
+        ) {
             with(binding) {
                 noteTitle.text = note.title
                 noteBody.text = note.body
                 noteDate.text = getDate(note.created)
                 notePinState.isChecked = note.isPinned
+                notePinState.setOnClickListener { onPinClick(note) }
                 root.setOnClickListener { onNoteClick(note) }
             }
         }

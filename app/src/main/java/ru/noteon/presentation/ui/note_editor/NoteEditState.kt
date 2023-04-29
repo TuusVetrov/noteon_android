@@ -5,7 +5,7 @@ data class NoteEditState(
     val title: String?,
     val body: String?,
     val isPinned: Boolean,
-    val showSave: Boolean,
+    val isSaving: Boolean,
     val finished: Boolean,
     val error: String?,
 ) {
@@ -15,7 +15,7 @@ data class NoteEditState(
             title = null,
             body = null,
             isPinned = false,
-            showSave = false,
+            isSaving = false,
             finished = false,
             error = null
         )

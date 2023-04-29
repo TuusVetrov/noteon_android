@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.list_notes.ListNotesFragment"
     >
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefreshNotes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="PrivateResource"
-        >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNotes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -34,30 +21,59 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/networkStatusLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        tools:background="?attr/colorError"
-        app:layout_anchor="@id/swipeToRefreshNotes"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
         >
         <TextView
-            android:padding="@dimen/normal_8"
             android:id="@+id/textNetworkStatus"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/normal_8"
             android:textColor="?attr/colorOnError"
+            android:background="?attr/colorError"
             android:drawablePadding="@dimen/normal_100"
-            android:gravity="center_vertical"
-            tools:text="@string/text_no_connectivity" />
+            android:gravity="center"
+            tools:text="@string/text_no_connectivity"
+            android:visibility="gone"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefreshNotes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/appBarLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:ignore="PrivateResource"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvNotes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNewNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/extended_fab_content_desc"
+        app:srcCompat="@drawable/ic_add_24"
+        />
+
     <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="@string/search_view_hint"
         app:layout_anchor="@id/searchBar">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchNotes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </com.google.android.material.search.SearchView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
