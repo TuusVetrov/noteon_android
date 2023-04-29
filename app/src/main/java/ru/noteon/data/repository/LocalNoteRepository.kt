@@ -27,6 +27,9 @@ class LocalNoteRepository @Inject constructor(
         .transform { notes -> emit(Either.success(notes)) }
         .catch { emit(Either.success(emptyList())) }
 
+    fun searchNote(searchQuery: String): Flow<List<NoteModel>> = notesDao.searchNote(searchQuery)
+        .map { notes -> notes.map { NoteModel(it.id, it.title, it.body, it.created, it.isPinned) } }
+
     suspend fun addNote(
         title: String,
         body: String

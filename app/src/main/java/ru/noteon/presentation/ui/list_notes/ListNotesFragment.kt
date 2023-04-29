@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -26,8 +27,8 @@ import ru.noteon.R
 import ru.noteon.core.utils.extensions.hiltMainNavGraphViewModels
 import ru.noteon.databinding.FragmentListNotesBinding
 import ru.noteon.domain.model.NoteModel
-import ru.noteon.presentation.ui.list_notes.adapter.NotesListAdapter
-import ru.noteon.presentation.ui.list_notes.adapter.SwipeToDeleteCallback
+import ru.noteon.presentation.ui.list_notes.adapters.NotesListAdapter
+import ru.noteon.presentation.ui.list_notes.adapters.SwipeToDeleteCallback
 
 
 const val CREATE_NOTE_TAG = "new_note"
@@ -37,7 +38,6 @@ class ListNotesFragment : Fragment() {
     private val notesViewModel: NotesViewModel by hiltMainNavGraphViewModels()
 
     private val notesAdapter by lazy { NotesListAdapter(::onPinClicked, ::onNoteClicked) }
-    private val searchAdapter by lazy { NotesListAdapter(::onPinClicked, ::onNoteClicked) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,27 +52,18 @@ class ListNotesFragment : Fragment() {
 
         initElements()
         observeState()
+        setupToolbar()
     }
 
     private fun initElements() {
         with(binding) {
             rvNotes.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = notesAdapter
-            }
-
-            searchView
-                .editText
-                .setOnEditorActionListener { v, actionId, event ->
-                    notesViewModel.searchNotes(searchView.text.toString())
+                layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL,
                     false
-                }
-
-            searchView.setOnClickListener { notesViewModel.restoreSearchNotes() }
-
-            rvSearchNotes.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = searchAdapter
+                )
+                adapter = notesAdapter
             }
 
             val rightSwipeHandler = object : SwipeToDeleteCallback(
@@ -93,13 +84,49 @@ class ListNotesFragment : Fragment() {
 
             fabNewNote.setOnClickListener {
                 findNavController().navigate(
-                    ListNotesFragmentDirections.actionListNotesFragmentToNoteEditFragment(CREATE_NOTE_TAG)
+                    ListNotesFragmentDirections
+                        .actionListNotesFragmentToNoteEditFragment(CREATE_NOTE_TAG)
                 )
             }
 
            swipeToRefreshNotes.setOnRefreshListener {
                notesViewModel.syncNotes()
                swipeToRefreshNotes.isRefreshing = false
+            }
+        }
+    }
+
+    private fun setupToolbar() {
+        with(binding) {
+
+
+            val item = mainToolbar.menu.findItem(R.id.search)
+
+            val searchView = item.actionView as SearchView
+
+
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        searchNotes(it)
+                    }
+                    return true
+                }
+            })
+        }
+    }
+
+    private fun searchNotes(query:String) {
+        val searchQuery = "%$query%"
+
+        notesViewModel.searchNote(searchQuery).observe(this) { list ->
+            list.let {
+                notesAdapter.submitList(it)
             }
         }
     }
@@ -119,7 +146,6 @@ class ListNotesFragment : Fragment() {
         }
 
         notesAdapter.submitList(state.notes)
-        searchAdapter.submitList(state.searchNotes)
 
         val errorMessage = state.error
         if (errorMessage != null) {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="?attr/colorSurfaceVariant">
+
+    <Button
+        style="?attr/materialIconButtonStyle"
+        android:id="@+id/formatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_format_size_24"
+        app:iconTint="?attr/colorOnSurfaceVariant"
+        />
+
+    <Button
+        style="?attr/materialIconButtonStyle"
+        android:id="@+id/checklistButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_checklist_24"
+        app:iconTint="?attr/colorOnSurfaceVariant"
+        />
+
+    <Button
+        style="?attr/materialIconButtonStyle"
+        android:id="@+id/addPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_add_photo_24"
+        app:iconTint="?attr/colorOnSurfaceVariant"
+        />
+
+    <Button
+        style="?attr/materialIconButtonStyle"
+        android:id="@+id/addLinkButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_add_link_24"
+        app:iconTint="?attr/colorOnSurfaceVariant"
+        />
+
+</LinearLayout>

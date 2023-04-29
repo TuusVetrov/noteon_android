@@ -1,4 +1,4 @@
-package ru.noteon.presentation.ui.list_notes.adapter
+package ru.noteon.presentation.ui.list_notes.adapters
 
 import android.content.Context
 import android.graphics.*

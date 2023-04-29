@@ -15,6 +15,9 @@ interface NotesDao {
     @Query("SELECT * FROM notes ORDER BY isPinned = 1 DESC, created DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>
 
+    @Query("SELECT * FROM notes WHERE title LIKE :searchQuery OR body LIKE :searchQuery")
+    fun searchNote(searchQuery: String): Flow<List<NoteEntity>>
+
     @Insert
     suspend fun addNote(note: NoteEntity)
 

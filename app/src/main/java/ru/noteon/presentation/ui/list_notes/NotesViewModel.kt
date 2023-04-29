@@ -1,7 +1,9 @@
 package ru.noteon.presentation.ui.list_notes
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -14,7 +16,7 @@ import ru.noteon.core.task.TaskManager
 import ru.noteon.core.task.TaskState
 import ru.noteon.core.token.TokenManager
 import ru.noteon.data.repository.LocalNoteRepository
-import ru.noteon.presentation.ui.login.LoginState
+import ru.noteon.domain.model.NoteModel
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,27 +39,8 @@ class NotesViewModel @Inject constructor(
         observeConnectivity()
     }
 
-    fun searchNotes(query: String) {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    searchNotes = uiState.value.notes.filter {
-                                it.title.contains(query, true) ||
-                                it.body.contains(query, true)
-                    }
-                )
-            }
-        }
-    }
-
-    fun restoreSearchNotes() {
-        viewModelScope.launch {
-            _uiState.update { currentState ->
-                currentState.copy(
-                    searchNotes = uiState.value.notes
-                )
-            }
-        }
+    fun searchNote(searchQuery: String): LiveData<List<NoteModel>> {
+        return noteRepository.searchNote(searchQuery).asLiveData()
     }
 
     fun syncNotes() {

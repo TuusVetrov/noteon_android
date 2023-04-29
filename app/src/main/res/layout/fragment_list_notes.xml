@@ -11,12 +11,12 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/searchBar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_menu_24"
-            android:hint="@string/search_bar_hint"
+            android:elevation="@dimen/normal_8"
+            app:menu="@menu/main_menu"
             />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,16 +64,4 @@
         android:contentDescription="@string/extended_fab_content_desc"
         app:srcCompat="@drawable/ic_add_24"
         />
-
-    <com.google.android.material.search.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/search_view_hint"
-        app:layout_anchor="@id/searchBar">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSearchNotes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.search.SearchView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

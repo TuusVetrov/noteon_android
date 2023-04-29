@@ -1,4 +1,4 @@
-package ru.noteon.presentation.ui.list_notes.adapter
+package ru.noteon.presentation.ui.list_notes.adapters
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
