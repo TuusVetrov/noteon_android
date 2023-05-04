@@ -10,6 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.noteon.core.utils.moshi
 import ru.noteon.data.remote.Constants
 import ru.noteon.data.remote.api.AuthService
+import ru.noteon.data.remote.api.FoldersService
 import ru.noteon.data.remote.api.NoteService
 import ru.noteon.data.remote.interceptor.AuthInterceptor
 import java.util.concurrent.TimeUnit
@@ -32,6 +33,14 @@ class NetworkModule {
             .client(okHttpClientBuilder.addInterceptor(authInterceptor).build())
             .build()
             .create(NoteService::class.java)
+    }
+
+    @Provides
+    fun provideFolderService(authInterceptor: AuthInterceptor): FoldersService {
+        return baseRetrofitBuilder
+            .client(okHttpClientBuilder.addInterceptor(authInterceptor).build())
+            .build()
+            .create(FoldersService::class.java)
     }
 
     @Provides

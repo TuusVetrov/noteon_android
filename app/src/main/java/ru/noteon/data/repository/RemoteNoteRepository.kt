@@ -27,9 +27,9 @@ class RemoteNoteRepository(
         emit(state)
     }.catch { emit(Either.error("Can't sync latest notes")) }
 
-    suspend fun addNote(title: String, body: String): Either<String> {
+    suspend fun addNote(title: String, folderId: String, body: String): Either<String> {
         return runCatching {
-            val notesResponse = noteService.addNote(NoteRequest(title, body)).getResponse()
+            val notesResponse = noteService.addNote(NoteRequest(title, body, folderId)).getResponse()
 
             when (notesResponse.status) {
                 State.SUCCESS -> Either.success(notesResponse.noteId!!)
@@ -43,13 +43,14 @@ class RemoteNoteRepository(
 
     suspend fun updateNote(
         noteId: String,
+        folderId: String,
         title: String,
         body: String
     ): Either<String> {
         return runCatching {
             val notesResponse = noteService.updateNote(
                 noteId,
-                NoteRequest(title, body)
+                NoteRequest(title, body, folderId)
             ).getResponse()
 
             when (notesResponse.status) {

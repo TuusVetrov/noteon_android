@@ -82,8 +82,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-
-
     private fun validateCredentials(): Boolean {
         val isValidEmail = AuthValidator.isValidEmail(uiState.value.email)
         val isValidPassword = AuthValidator.isValidPassword(uiState.value.password)

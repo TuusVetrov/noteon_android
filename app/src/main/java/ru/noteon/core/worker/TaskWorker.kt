@@ -1,6 +1,7 @@
 package ru.noteon.core.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -36,10 +37,9 @@ class TaskWorker @AssistedInject constructor(
         }
     }
 
-
     private suspend fun addNote(tempNoteId: String): Result {
         val note = fetchLocalNote(tempNoteId)
-        val response = remoteNoteRepository.addNote(note.title, note.body)
+        val response = remoteNoteRepository.addNote(note.title, note.folder, note.body)
         return if (response is Either.Success) {
             localNoteRepository.updateNoteId(tempNoteId, response.data)
             Result.success()
@@ -50,7 +50,7 @@ class TaskWorker @AssistedInject constructor(
 
     private suspend fun updateNote(noteId: String): Result {
         val note = fetchLocalNote(noteId)
-        val response = remoteNoteRepository.updateNote(note.id, note.title, note.body)
+        val response = remoteNoteRepository.updateNote(note.id, note.folder, note.title, note.body)
         return if (response is Either.Success) Result.success() else Result.retry()
     }
 

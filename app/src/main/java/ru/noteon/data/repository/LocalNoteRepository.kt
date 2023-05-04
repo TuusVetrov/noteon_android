@@ -1,5 +1,6 @@
 package ru.noteon.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.*
 import ru.noteon.core.utils.Either
 import ru.noteon.data.local.dao.NotesDao
@@ -20,24 +21,32 @@ class LocalNoteRepository @Inject constructor(
 
     fun getNoteById(noteId: String): Flow<NoteModel> = notesDao.getNoteById(noteId)
         .filterNotNull()
-        .map { NoteModel(it.id, it.title, it.body, it.created, it.isPinned) }
+        .map { NoteModel(it.noteId, it.folder, it.title, it.body, it.created, it.isPinned) }
 
     fun getAllNotes(): Flow<Either<List<NoteModel>>> = notesDao.getAllNotes()
-        .map { notes -> notes.map { NoteModel(it.id, it.title, it.body, it.created, it.isPinned) } }
+        .map { notes -> notes.map { NoteModel(it.noteId, it.folder, it.title, it.body, it.created, it.isPinned) } }
         .transform { notes -> emit(Either.success(notes)) }
         .catch { emit(Either.success(emptyList())) }
 
-    fun searchNote(searchQuery: String): Flow<List<NoteModel>> = notesDao.searchNote(searchQuery)
-        .map { notes -> notes.map { NoteModel(it.id, it.title, it.body, it.created, it.isPinned) } }
+
+    fun getAllNotesFromFolderId(folderId: String): Flow<Either<List<NoteModel>>> = notesDao.getAllNotesFromFolderId(folderId)
+        .map { notes -> notes.map { NoteModel(it.noteId, it.folder, it.title, it.body, it.created, it.isPinned) } }
+        .transform { notes -> emit(Either.success(notes)) }
+        .catch { emit(Either.success(emptyList())) }
+
+    fun searchNote(searchQuery: String, folderId: String): Flow<List<NoteModel>> = notesDao.searchNote(searchQuery, folderId)
+        .map { notes -> notes.map { NoteModel(it.noteId, it.folder, it.title, it.body, it.created, it.isPinned) } }
 
     suspend fun addNote(
         title: String,
-        body: String
+        body: String,
+        folderId: String,
     ): Either<String> = runCatching {
         val tmpNoteId = generateTemporaryId()
         notesDao.addNote(
             NoteEntity(
-                id = tmpNoteId,
+                noteId = tmpNoteId,
+                folder = folderId,
                 title = title,
                 body = body,
                 created = System.currentTimeMillis(),
@@ -48,19 +57,33 @@ class LocalNoteRepository @Inject constructor(
     }.getOrDefault(Either.error("Unable to create a new note"))
 
     suspend fun addNotes(notes: List<NoteModel>) = notes.map {
-        NoteEntity(it.id, it.title, it.body, it.created, it.isPinned)
+        NoteEntity(it.id, it.title, it.body, it.created, it.isPinned, it.folder)
     }.let {
         notesDao.addNotes(it)
     }
 
+  /*  suspend fun updateNote(
+        noteId: String,
+        title: String,
+        body: String,
+        folderId: String,
+    ): Either<String> = runCatching {
+        Log.d("meme", "asdas")
+        notesDao.testUpdateNoteById(noteId)
+        Log.d("meme", "sad")
+        Either.success(noteId)
+    }.getOrDefault(Either.error("Unable to update a note"))*/
+
     suspend fun updateNote(
         noteId: String,
         title: String,
-        body: String
+        note: String,
+        folderId: String
     ): Either<String> = runCatching {
-        notesDao.updateNoteById(noteId, title, body)
+        notesDao.updateNoteById(noteId, folderId, title, note)
         Either.success(noteId)
     }.getOrDefault(Either.error("Unable to update a note"))
+
 
     suspend fun deleteNote(noteId: String): Either<String> = runCatching {
         notesDao.deleteNoteById(noteId)

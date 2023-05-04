@@ -1,5 +1,6 @@
 package ru.noteon.core.task
 
+import android.util.Log
 import androidx.work.*
 import kotlinx.coroutines.flow.Flow
 import androidx.lifecycle.asFlow
@@ -42,7 +43,6 @@ class TaskManager @Inject constructor(
             ExistingWorkPolicy.REPLACE,
             taskWorker
         )
-
         return taskWorker.id
     }
 

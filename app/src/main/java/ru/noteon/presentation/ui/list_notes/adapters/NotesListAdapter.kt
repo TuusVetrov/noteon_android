@@ -1,11 +1,17 @@
 package ru.noteon.presentation.ui.list_notes.adapters
 
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.*
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sophimp.are.inner.Html
 import ru.noteon.databinding.NoteItemBinding
 import ru.noteon.domain.model.NoteModel
 import java.text.SimpleDateFormat
@@ -48,8 +54,22 @@ class NotesListAdapter(
             onNoteClick: (NoteModel) -> Unit,
         ) {
             with(binding) {
-                noteTitle.text = note.title
-                noteBody.text = note.body
+                // roflan code style
+                if (note.title.trim().isEmpty()){
+                    noteTitle.text = "Новая заметка"
+                } else {
+                    noteTitle.text = note.title
+                }
+
+                if (note.body.trim().isEmpty()){
+                    noteBody.text = "Нет дополнительного текста"
+                } else {
+                    val body = SpannableStringBuilder(
+                        Html.fromHtml(note.body, FROM_HTML_MODE_COMPACT)
+                    ).toString()
+                    noteBody.text = body
+                }
+
                 noteDate.text = getDate(note.created)
                 notePinState.isChecked = note.isPinned
                 notePinState.setOnClickListener { onPinClick(note) }

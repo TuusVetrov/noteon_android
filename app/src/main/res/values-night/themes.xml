@@ -26,5 +26,13 @@
         <item name="colorOnSurfaceInverse">@color/dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/dark_inversePrimary</item>
+
+
+        <item name="colorAccent">@color/dark_primary</item>
+
+        <item name="textInputStyle">@style/Theme.NoteOn.TextInputLayout</item>
+
+        <item name="android:statusBarColor">@color/dark_surface</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

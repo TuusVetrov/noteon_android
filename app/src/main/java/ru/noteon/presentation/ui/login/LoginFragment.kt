@@ -19,11 +19,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import ru.noteon.R
 import ru.noteon.core.utils.extensions.hiltMainNavGraphViewModels
 import ru.noteon.core.utils.extensions.snackBar
@@ -105,7 +103,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToNotesScreen() {
-        findNavController().navigate(R.id.action_loginFragment_to_listNotesFragment)
+        findNavController().navigate(R.id.action_loginFragment_to_foldersListFragment)
     }
 
     private fun navigateToSignUpScreen() {

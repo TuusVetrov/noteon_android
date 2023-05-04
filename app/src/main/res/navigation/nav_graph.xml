@@ -14,11 +14,8 @@
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_listNotesFragment"
-            app:destination="@id/listNotesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_noteEditFragment"
-            app:destination="@id/noteEditFragment" />
+            android:id="@+id/action_homeFragment_to_foldersListFragment"
+            app:destination="@id/foldersListFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -26,14 +23,11 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_listNotesFragment"
-            app:destination="@id/listNotesFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_forgotPasswordEmail"
-            app:destination="@id/forgotPasswordEmail" />
+            android:id="@+id/action_loginFragment_to_foldersListFragment"
+            app:destination="@id/foldersListFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -41,8 +35,8 @@
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
-            android:id="@+id/action_signUpFragment_to_otpFragment"
-            app:destination="@id/otpFragment" />
+            android:id="@+id/action_signUpFragment_to_foldersListFragment"
+            app:destination="@id/foldersListFragment" />
     </fragment>
     <fragment
         android:id="@+id/listNotesFragment"
@@ -53,44 +47,46 @@
             android:id="@+id/action_listNotesFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_listNotesFragment_to_noteEditFragment"
-            app:destination="@id/noteEditFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/otpFragment"
-        android:name="ru.noteon.presentation.ui.otp.OtpFragment"
-        android:label="fragment_otp"
-        tools:layout="@layout/fragment_otp" >
+            android:id="@+id/action_listNotesFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
         <action
-            android:id="@+id/action_otpFragment_to_changePasswordFragment"
-            app:destination="@id/changePasswordFragment" />
+            android:id="@+id/action_listNotesFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
+        <argument
+            android:name="folderId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="folderName"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
-        android:id="@+id/forgotPasswordEmail"
-        android:name="ru.noteon.presentation.ui.forgot_password_email.ForgotPasswordEmail"
-        android:label="fragment_forgot_password_email"
-        tools:layout="@layout/fragment_forgot_password_email" >
-        <action
-            android:id="@+id/action_forgotPasswordEmail_to_otpFragment"
-            app:destination="@id/otpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/changePasswordFragment"
-        android:name="ru.noteon.presentation.ui.change_password.ChangePasswordFragment"
-        android:label="fragment_change_password"
-        tools:layout="@layout/fragment_change_password" >
-        <action
-            android:id="@+id/action_changePasswordFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/noteEditFragment"
-        android:name="ru.noteon.presentation.ui.note_editor.NoteEditFragment"
-        android:label="fragment_note_edit"
-        tools:layout="@layout/fragment_note_edit" >
+        android:id="@+id/editNoteFragment"
+        android:name="ru.noteon.presentation.ui.edit_note.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" >
         <argument
             android:name="noteId"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="ru.noteon.presentation.ui.create_note.CreateNoteFragment"
+        android:label="CreateNoteFragment" >
+        <argument
+            android:name="folderId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/foldersListFragment"
+        android:name="ru.noteon.presentation.ui.list_folders.FoldersListFragment"
+        android:label="FoldersListFragment" >
+
+        <action
+            android:id="@+id/action_foldersListFragment_to_listNotesFragment"
+            app:destination="@id/listNotesFragment" />
     </fragment>
 </navigation>

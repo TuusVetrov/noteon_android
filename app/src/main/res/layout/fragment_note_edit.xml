@@ -1,100 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:menu="@menu/note_edit_toolbar"
-            app:navigationIcon="@drawable/ic_arrow_back_24" />
+            app:navigationIcon="@drawable/ic_arrow_back" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_constraintBottom_toTopOf="@+id/container_bottom_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/noteContentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSurface">
+            android:background="?attr/colorSurface"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            >
 
-            <com.yahiaangelo.markdownedittext.MarkdownEditText
+            <TextView
+                android:id="@+id/previewTextTitle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="68dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginBottom="48dp"
-                android:hint="Enter text"
-                android:id="@+id/edittext"
-                android:gravity="top"
-                android:background="@android:color/white"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:visibility="gone"
+                android:gravity="top|start"
                 />
 
-            <com.yahiaangelo.markdownedittext.MarkdownStylesBar
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:backgroundTint="@color/text_primary"
-                android:id="@+id/stylesbar"
-                app:buttonColor="@color/button_style_color"
-                android:clipToPadding="false"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fieldTitle"
+            <TextView
+                android:id="@+id/previewTextBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/normal_100"
-                android:layout_marginEnd="@dimen/normal_100"
-                android:background="?attr/colorSurface"
-                android:hint="@string/hint_field_title"
-                android:maxLength="30"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/fieldNote"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintVertical_chainStyle="packed" />
+                android:textIsSelectable="true"
+                android:visibility="gone"
+                android:gravity="top|start"
+                />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fieldNote"
-                android:layout_width="match_parent"
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/container_bottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorOutline" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/bottom_toolbar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/normal_100"
-                android:layout_marginTop="@dimen/normal_200"
-                android:layout_marginEnd="@dimen/normal_100"
-                android:background="?attr/colorSurface"
-                android:gravity="start"
-                android:hint="Write note here"
-                android:lineSpacingExtra="5dp"
-                android:paddingBottom="@dimen/normal_400"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fieldTitle" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                android:background="@android:color/transparent"
+                app:contentInsetStart="0dp"
+                app:menu="@menu/note_edit_bottom_toolbar" />
+        </HorizontalScrollView>
+    </LinearLayout>
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabNewNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/note_edit_fab_content_desc"
+        app:layout_constraintBottom_toTopOf="@+id/container_bottom_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_edit_note_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

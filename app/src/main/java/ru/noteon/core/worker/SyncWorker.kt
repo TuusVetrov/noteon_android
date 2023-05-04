@@ -1,6 +1,7 @@
 package ru.noteon.core.worker
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -54,6 +55,8 @@ class SyncWorker @AssistedInject constructor(
     private fun shouldReplaceNote(noteId: String): Boolean {
         val taskId = taskManager.getTaskIdFromNoteId(noteId).toUUID()
         val state = taskManager.getTaskState(taskId)
+
+        Log.d("shouldReplaceNote", "$noteId |$taskId | ${state != TaskState.SCHEDULED}")
 
         return (state == null || state != TaskState.SCHEDULED)
     }

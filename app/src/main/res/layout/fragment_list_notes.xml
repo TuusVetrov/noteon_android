@@ -15,7 +15,10 @@
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:titleTextAppearance="@style/TextAppearance.H2"
             android:elevation="@dimen/normal_8"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="?attr/colorOnSurface"
             app:menu="@menu/main_menu"
             />
     </com.google.android.material.appbar.AppBarLayout>

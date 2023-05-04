@@ -8,7 +8,3 @@ class NoteTask private constructor(val noteId: String, val action: TaskAction) {
         fun pin(noteId: String) = NoteTask(noteId, TaskAction.PIN)
     }
 }
-
-enum class TaskAction {
-    CREATE, UPDATE, DELETE, PIN
-}

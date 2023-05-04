@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "NoteOn"
-include ':app', ':MarkdownEditText'
+include ':app'
+include ':lib:are'

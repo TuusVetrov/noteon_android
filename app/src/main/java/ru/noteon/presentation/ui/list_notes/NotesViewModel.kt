@@ -1,10 +1,13 @@
 package ru.noteon.presentation.ui.list_notes
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import dagger.Module
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -17,14 +20,13 @@ import ru.noteon.core.task.TaskState
 import ru.noteon.core.token.TokenManager
 import ru.noteon.data.repository.LocalNoteRepository
 import ru.noteon.domain.model.NoteModel
-import javax.inject.Inject
 
-@HiltViewModel
-class NotesViewModel @Inject constructor(
+class NotesViewModel @AssistedInject constructor(
     private val noteRepository: LocalNoteRepository,
     private val tokenManager: TokenManager,
     private val taskManager: TaskManager,
-    private val connectivityObserver: ConnectivityObserver
+    private val connectivityObserver: ConnectivityObserver,
+    @Assisted private val folderId: String
 ): ViewModel() {
     private val _uiState = MutableStateFlow(NotesState.init)
     val uiState: StateFlow<NotesState> = _uiState
@@ -40,7 +42,7 @@ class NotesViewModel @Inject constructor(
     }
 
     fun searchNote(searchQuery: String): LiveData<List<NoteModel>> {
-        return noteRepository.searchNote(searchQuery).asLiveData()
+        return noteRepository.searchNote(searchQuery, folderId).asLiveData()
     }
 
     fun syncNotes() {
@@ -142,7 +144,7 @@ class NotesViewModel @Inject constructor(
         taskManager.scheduleTask(NoteTask.pin(noteId))
 
     private fun observeNotes() {
-        noteRepository.getAllNotes()
+        noteRepository.getAllNotesFromFolderId(folderId)
             .distinctUntilChanged()
             .onEach { response ->
                 response.onSuccess { notes ->
@@ -193,8 +195,25 @@ class NotesViewModel @Inject constructor(
             }
         }
     }
+    @AssistedFactory
+    interface Factory {
+        fun create(folderId: String): NotesViewModel
+    }
 
+    @Suppress("UNCHECKED_CAST")
     companion object {
         private const val TAG = "NotesViewModel"
+        fun provideFactory(
+            assistedFactory: Factory,
+            folderId: String
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(folderId) as T
+            }
+        }
     }
 }
+
+@Module
+@InstallIn(ActivityRetainedComponent::class)
+interface AssistedInjectModule

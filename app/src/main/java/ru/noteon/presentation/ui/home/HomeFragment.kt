@@ -47,10 +47,10 @@ class HomeFragment : Fragment() {
         val isLoggedIn = state.isLoggedIn ?: return
 
         val destination = if (isLoggedIn) {
-            R.id.action_homeFragment_to_loginFragment
+            R.id.action_homeFragment_to_foldersListFragment
         } else {
-            R.id.action_homeFragment_to_listNotesFragment
+            R.id.action_homeFragment_to_loginFragment
         }
-        findNavController().navigate(R.id.action_homeFragment_to_listNotesFragment)
+        findNavController().navigate( destination)
     }
 }

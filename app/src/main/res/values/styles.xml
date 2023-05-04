@@ -17,6 +17,11 @@
         </item>
     </style>
 
+    <style name="AppTheme.BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
     <style name="Theme.NoteOn.TextButton"
         parent="Widget.Material3.Button.TextButton">
         <item name="shapeAppearance">@style/Theme.NoteOn.ShapeAppearanceBigButton</item>

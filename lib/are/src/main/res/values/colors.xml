@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimaryX">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDarkX">#303F9F</color>-->
+    <!--<color name="colorAccentX">#FF4081</color>-->
+    <string-array name="pickerColors">
+        <item>#232323</item>
+        <item>#9D9DA1</item>
+        <item>#F9C35B</item>
+        <item>#39CA90</item>
+        <item>#3BBEC3</item>
+        <item>#4BA2F3</item>
+        <item>#FB6260</item>
+        <item>#FF985E</item>
+        <item>#ffaa00</item>
+        <item>#60bf70</item>
+        <item>#00ccbb</item>
+        <item>#00acf1</item>
+        <item>#4ad453</item>
+        <item>#90b44b</item>
+        <item>#86c166</item>
+        <item>#5ba89b</item>
+        <item>#ffa6c3</item>
+        <item>#f2b5c3</item>
+        <item>#f596aa</item>
+        <item>#e16b8c</item>
+        <item>#ff66a6</item>
+        <item>#9e7a7a</item>
+        <item>#b19693</item>
+        <item>#876633</item>
+        <item>#646a58</item>
+        <item>#5dac81</item>
+        <item>#1ebacc</item>
+        <item>#49baf2</item>
+        <item>#58b2dc</item>
+        <item>#2ea9df</item>
+        <item>#239beb</item>
+        <item>#0089a7</item>
+        <item>#b28fce</item>
+        <item>#797979</item>
+        <item>#817076</item>
+        <item>#9898d9</item>
+        <item>#d9bea3</item>
+        <item>#a0cc47</item>
+        <item>#c285ff</item>
+        <item>#779eed</item>
+        <item>#8695b2</item>
+        <item>#bf9999</item>
+        <item>#ff7373</item>
+        <item>#8F3700</item>
+        <item>#004F7D</item>
+        <item>#C88E00</item>
+        <item>#c1c1c1</item>
+        <item>#ffffff</item>
+    </string-array>
+
+    <color name="primary">#426915</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#C2F18E</color>
+    <color name="onPrimaryContainer">#0F2000</color>
+    <color name="primaryFixed">#C2F18E</color>
+    <color name="onPrimaryFixed">#0F2000</color>
+    <color name="primaryFixedDim">#A7D474</color>
+    <color name="onPrimaryFixedVariant">#2D5000</color>
+    <color name="secondary">#57624A</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#DBE7C8</color>
+    <color name="onSecondaryContainer">#151E0B</color>
+    <color name="secondaryFixed">#DBE7C8</color>
+    <color name="onSecondaryFixed">#151E0B</color>
+    <color name="secondaryFixedDim">#BFCBAD</color>
+    <color name="onSecondaryFixedVariant">#404A33</color>
+    <color name="tertiary">#386663</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="tertiaryContainer">#BBECE8</color>
+    <color name="onTertiaryContainer">#00201F</color>
+    <color name="tertiaryFixed">#BBECE8</color>
+    <color name="onTertiaryFixed">#00201F</color>
+    <color name="tertiaryFixedDim">#A0CFCC</color>
+    <color name="onTertiaryFixedVariant">#1F4E4C</color>
+    <color name="error">#BA1A1A</color>
+    <color name="errorContainer">#FFDAD6</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="onErrorContainer">#410002</color>
+    <color name="background">#FDFCF5</color>
+    <color name="onBackground">#1B1C18</color>
+    <color name="outline">#75796C</color>
+    <color name="inverseOnSurface">#F2F1EA</color>
+    <color name="inverseSurface">#30312C</color>
+    <color name="inversePrimary">#A7D474</color>
+    <color name="shadow">#000000</color>
+    <color name="surfaceTint">#426915</color>
+    <color name="outlineVariant">#C4C8BA</color>
+    <color name="scrim">#000000</color>
+    <color name="surface">#FAFAF2</color>
+    <color name="onSurface">#1B1C18</color>
+    <color name="surfaceVariant">#E1E4D5</color>
+    <color name="onSurfaceVariant">#44483D</color>
+    <color name="surfaceContainerHighest">#E3E3DB</color>
+    <color name="surfaceContainerHigh">#E9E8E1</color>
+    <color name="surfaceContainer">#EFEEE7</color>
+    <color name="surfaceContainerLow">#F5F4EC</color>
+    <color name="surfaceContainerLowest">#FFFFFF</color>
+    <color name="surfaceDim">#DBDAD3</color>
+    <color name="surfaceBright">#FAFAF2</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="table_view_default_separator_color">#E7E7E7</color>
+    <color name="table_view_default_unselected_background_color">#ffffff</color>
+    <color name="table_view_default_selected_background_color">#fada65</color>
+    <color name="table_view_default_shadow_background_color">#f2f2f2</color>
+</resources>

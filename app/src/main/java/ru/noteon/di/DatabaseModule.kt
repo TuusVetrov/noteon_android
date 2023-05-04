@@ -18,4 +18,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideNotesDao(database: Database) = database.getNotesDao()
+
+    @Singleton
+    @Provides
+    fun provideFoldersDao(database: Database) = database.getFoldersDao()
 }

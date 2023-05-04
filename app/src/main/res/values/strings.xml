@@ -19,13 +19,14 @@
     <string name="error_loading_title">Не удалось войти в аккаунт</string>
     <string name="error_signup_title">Не удалось создать аккаунт</string>
     <string name="search_bar_hint">Поиск по заметкам</string>
-    <string name="search_view_hint">penis</string>
 
     <string name="text_no_connectivity">Отсутствует подключение к интернету</string>
     <string name="text_connectivity">Снова онлайн</string>
 
     <string name="hint_field_title">Заголовок</string>
     <string name="hint_field_body">Тело заметки</string>
+
+    <string name="message_note_error">Что-то пошло не так</string>
 
     <string name="menu_pin">Закрепить</string>
     <string name="menu_delete">Удалить</string>
@@ -43,6 +44,25 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="action_insert_link">Вставить ссылку</string>
+    <string name="action_insert_image">Вставить картинку</string>
+    <string name="action_insert_table">Вставить таблицу</string>
+    <string name="message_invalid_number_rows_columns">Неверное количество строк или столбцов</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_insert">Вставить</string>
+
     <string name="link_input_title_hint">Название (необязательно)</string>
     <string name="link_input_url_hint">Ссылка</string>
+    <string name="note_edit_fab_content_desc">Открыть редактор заметки</string>
+    <string name="hint_number_columns">Число столбцов</string>
+    <string name="hint_number_rows">количество рядов</string>
+    <string name="hint_image_description">Описание</string>
+    <string name="hint_image_path">Путь до изображения</string>
+    <string name="extended_fab_content_desc_folder">Создать новую папку</string>
+    <string name="toolbar_foolders_title">Папки</string>
+    <string name="btn_text_create">Создать</string>
+    <string name="btn_text_cancel">Отменить</string>
+    <string name="folder_name_text_input_hint">Название папки</string>
+    <string name="menu_action_move">Переместить заметку в другую папку</string>
 </resources>

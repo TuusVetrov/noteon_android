@@ -9,9 +9,13 @@ import androidx.fragment.app.commit
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.components.ActivityComponent
 import ru.noteon.R
 import ru.noteon.databinding.ActivityMainBinding
+import ru.noteon.presentation.ui.edit_note.EditNoteViewModel
 import ru.noteon.presentation.ui.list_notes.ListNotesFragment
 import ru.noteon.presentation.ui.login.LoginFragment
 

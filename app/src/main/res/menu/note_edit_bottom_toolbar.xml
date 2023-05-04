@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_insert_bold"
+        android:icon="@drawable/ic_format_bold_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_italics"
+        android:icon="@drawable/ic_format_italic_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_strikethrough"
+        android:icon="@drawable/ic_format_strikethrough_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_heading"
+        android:icon="@drawable/ic_format_size_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_quote"
+        android:icon="@drawable/ic_format_quote_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_code"
+        android:icon="@drawable/ic_code_24"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_insert_link"
+        android:icon="@drawable/ic_add_link_24"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_insert_table"
+        android:icon="@drawable/ic_table"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_insert_image"
+        android:icon="@drawable/ic_add_photo_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_toggle_check_line"
+        android:icon="@drawable/ic_checklist_24"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_undo"
+        android:icon="@drawable/ic_undo_24"
+        app:showAsAction="always"
+        android:enabled="false"
+        android:title=""/>
+    <item
+        android:id="@+id/action_redo"
+        android:icon="@drawable/ic_redo_24"
+        app:showAsAction="always"
+        android:enabled="false"
+        android:title=""/>
+</menu>

@@ -11,11 +11,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,13 +31,22 @@ import ru.noteon.databinding.FragmentListNotesBinding
 import ru.noteon.domain.model.NoteModel
 import ru.noteon.presentation.ui.list_notes.adapters.NotesListAdapter
 import ru.noteon.presentation.ui.list_notes.adapters.SwipeToDeleteCallback
+import javax.inject.Inject
 
-
-const val CREATE_NOTE_TAG = "new_note"
 @AndroidEntryPoint
 class ListNotesFragment : Fragment() {
     private lateinit var binding: FragmentListNotesBinding
-    private val notesViewModel: NotesViewModel by hiltMainNavGraphViewModels()
+
+    private val args: ListNotesFragmentArgs by navArgs()
+
+    @Inject
+    lateinit var viewModelAssistedFactory: NotesViewModel.Factory
+
+    private val viewModel: NotesViewModel by viewModels {
+        args.folderId?.let { folderId ->
+            NotesViewModel.provideFactory(viewModelAssistedFactory, folderId)
+        } ?: throw IllegalStateException("'folderId' shouldn't be null")
+    }
 
     private val notesAdapter by lazy { NotesListAdapter(::onPinClicked, ::onNoteClicked) }
 
@@ -44,6 +55,7 @@ class ListNotesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListNotesBinding.inflate(inflater, container, false)
+        binding.mainToolbar.title = args.folderName ?: ""
         return binding.root
     }
 
@@ -75,7 +87,7 @@ class ListNotesFragment : Fragment() {
                     val adapter = rvNotes.adapter as NotesListAdapter
 
                     val noteId = adapter.getNoteID(viewHolder.adapterPosition)
-                    notesViewModel.delete(noteId)
+                    viewModel.delete(noteId)
                 }
             }
 
@@ -83,14 +95,16 @@ class ListNotesFragment : Fragment() {
             rightItemTouchHelper.attachToRecyclerView(rvNotes)
 
             fabNewNote.setOnClickListener {
-                findNavController().navigate(
-                    ListNotesFragmentDirections
-                        .actionListNotesFragmentToNoteEditFragment(CREATE_NOTE_TAG)
-                )
+                args.folderId?.let { folderId ->
+                    Log.d("findNavController", folderId)
+                    findNavController().navigate(
+                        ListNotesFragmentDirections.actionListNotesFragmentToCreateNoteFragment(folderId)
+                    )
+                } ?: throw IllegalStateException("'folderId' shouldn't be null")
             }
 
            swipeToRefreshNotes.setOnRefreshListener {
-               notesViewModel.syncNotes()
+               viewModel.syncNotes()
                swipeToRefreshNotes.isRefreshing = false
             }
         }
@@ -98,13 +112,12 @@ class ListNotesFragment : Fragment() {
 
     private fun setupToolbar() {
         with(binding) {
-
+            mainToolbar.setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
 
             val item = mainToolbar.menu.findItem(R.id.search)
-
             val searchView = item.actionView as SearchView
-
-
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -124,7 +137,7 @@ class ListNotesFragment : Fragment() {
     private fun searchNotes(query:String) {
         val searchQuery = "%$query%"
 
-        notesViewModel.searchNote(searchQuery).observe(this) { list ->
+        viewModel.searchNote(searchQuery).observe(this) { list ->
             list.let {
                 notesAdapter.submitList(it)
             }
@@ -132,7 +145,7 @@ class ListNotesFragment : Fragment() {
     }
 
     private fun observeState() {
-        notesViewModel.uiState
+        viewModel.uiState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state -> notesStateHandler(state) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -183,7 +196,7 @@ class ListNotesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 if (shouldSyncNotes()) {
-                    notesViewModel.syncNotes()
+                    viewModel.syncNotes()
                 }
 
                 with(binding) {
@@ -212,7 +225,7 @@ class ListNotesFragment : Fragment() {
 
     private fun onNoteClicked(note: NoteModel) {
         findNavController().navigate(
-            ListNotesFragmentDirections.actionListNotesFragmentToNoteEditFragment(note.id)
+            ListNotesFragmentDirections.actionListNotesFragmentToEditNoteFragment(note.id)
         )
     }
 
@@ -220,10 +233,10 @@ class ListNotesFragment : Fragment() {
         // TODO: this shit does not work, check view-model function
         Log.d("onPinClicked", note.id)
         val pinState = note.isPinned.not()
-        notesViewModel.togglePin(note.id, pinState)
+        viewModel.togglePin(note.id, pinState)
     }
 
-    private fun shouldSyncNotes() = notesViewModel.uiState.value.error != null
+    private fun shouldSyncNotes() = viewModel.uiState.value.error != null
 
     companion object {
         const val ANIMATION_DURATION = 2000L

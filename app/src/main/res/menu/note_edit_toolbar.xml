@@ -15,8 +15,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_done"
-        android:title="@string/menu_done"
-        android:visible="false"
+        android:id="@+id/action_move_to_folder"
+        android:icon="@drawable/ic_file_move_24"
+        android:title="@string/menu_action_move"
         app:showAsAction="ifRoom" />
 </menu>
