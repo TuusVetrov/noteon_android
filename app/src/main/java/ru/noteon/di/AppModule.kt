@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.noteon.core.connectivity.ConnectivityObserver
+import ru.noteon.core.preference_manager.PreferenceManager
+import ru.noteon.core.preference_manager.uiModeDataStore
 import ru.noteon.core.token.TokenManager
 import ru.noteon.core.token.TokenSharedPreferencesFactory
 import ru.noteon.core.utils.connectivityManager
@@ -15,6 +17,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+    @Singleton
+    @Provides
+    fun providePreferenceManager(application: Application): PreferenceManager {
+        return PreferenceManager(application.uiModeDataStore)
+    }
+
     @Singleton
     @Provides
     fun provideTokenManager(application: Application): TokenManager {

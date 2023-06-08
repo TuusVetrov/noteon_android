@@ -64,10 +64,10 @@ class NotesListAdapter(
                 if (note.body.trim().isEmpty()){
                     noteBody.text = "Нет дополнительного текста"
                 } else {
-                    val body = SpannableStringBuilder(
-                        Html.fromHtml(note.body, FROM_HTML_MODE_COMPACT)
-                    ).toString()
-                    noteBody.text = body
+                  //  val body = SpannableStringBuilder(
+                  //      Html.fromHtml(note.body, FROM_HTML_MODE_COMPACT)
+                  //  ).toString()
+                    noteBody.text = note.body
                 }
 
                 noteDate.text = getDate(note.created)

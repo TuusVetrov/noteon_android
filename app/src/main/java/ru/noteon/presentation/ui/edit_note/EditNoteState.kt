@@ -1,9 +1,12 @@
 package ru.noteon.presentation.ui.edit_note
 
+import ru.noteon.domain.model.FolderModel
+
 data class EditNoteState(
     val title: String?,
     val body: String?,
     val folder: String?,
+    val folders: List<FolderModel>,
     val isPinned: Boolean,
     val isSaving: Boolean,
     val finished: Boolean,
@@ -14,6 +17,7 @@ data class EditNoteState(
             title = null,
             body = null,
             folder = null,
+            folders = emptyList(),
             isPinned = false,
             isSaving = false,
             finished = true,

@@ -2,6 +2,7 @@ package ru.noteon.presentation.ui.edit_note
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -22,10 +23,12 @@ import ru.noteon.R
 import ru.noteon.core.utils.extensions.snackBar
 import ru.noteon.core.utils.extensions.toStringOrEmpty
 import ru.noteon.databinding.FragmentEditNoteBinding
+import ru.noteon.domain.model.FolderModel
+import ru.noteon.presentation.ui.dialog.ChooseFolderDialogFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditNoteFragment : Fragment() {
+class EditNoteFragment : Fragment(), ChooseFolderDialogFragment.FolderDialogListener {
     private lateinit var binding: FragmentEditNoteBinding
 
     private val args: EditNoteFragmentArgs by navArgs()
@@ -43,12 +46,21 @@ class EditNoteFragment : Fragment() {
         } ?: throw IllegalStateException("'noteId' shouldn't be null")
     }
 
+    lateinit var dialog: ChooseFolderDialogFragment
+    lateinit var listener: ChooseFolderDialogFragment.FolderDialogListener
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        listener = this
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         binding.bottomToolbar.initDefaultToolItem(binding.noteBodyEditor)
+
         return binding.root
     }
 
@@ -106,6 +118,11 @@ class EditNoteFragment : Fragment() {
                         viewModel.togglePin()
                         true
                     }
+                    R.id.action_move_to_folder -> {
+                        dialog = ChooseFolderDialogFragment(listener, viewModel.uiState.value.folders)
+                        dialog.show(parentFragmentManager, "tag")
+                        true
+                    }
                     else -> false
                 }
             }
@@ -124,5 +141,11 @@ class EditNoteFragment : Fragment() {
             val icon = if (isPinned) R.drawable.ic_pined_24 else R.drawable.ic_unpined_24
             setIcon(icon)
         }
+    }
+
+    override fun chooseFolderClick(folder: FolderModel) {
+        Log.d("MEMESLAM", folder.folderName)
+        viewModel.setFolder(folder.id)
+        dialog.dismiss()
     }
 }

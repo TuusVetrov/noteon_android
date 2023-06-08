@@ -45,8 +45,14 @@ class SignUpFragment : Fragment() {
 
     private fun initElements() {
         with(binding) {
-            createAccountButton.setOnClickListener { signUpViewModel.signUp() }
+            createAccountButton.setOnClickListener {
+                signUpViewModel.signUp()
+
+            }
             topAppBar.setNavigationOnClickListener { navigateBack() }
+            usernameTextInputLayout.editText?.addTextChangedListener {
+                signUpViewModel.setUsername(it.toStringOrEmpty())
+            }
             emailTextInputLayout.editText?.addTextChangedListener {
                 signUpViewModel.setEmail(it.toStringOrEmpty())
             }
@@ -54,13 +60,17 @@ class SignUpFragment : Fragment() {
                 signUpViewModel.setPassword(it.toStringOrEmpty())
             }
             confirmPasswordTextInputLayout.editText?.addTextChangedListener {
-                signUpViewModel.setPassword(it.toStringOrEmpty())
+                signUpViewModel.setConfirmPassword(it.toStringOrEmpty())
             }
         }
     }
 
     private fun signUpStateHandler(state: SignUpState) {
         with(binding) {
+            usernameTextInputLayout.setError(state.isValidUsername == false) {
+                "Некорректное имя пользователя"
+            }
+
             emailTextInputLayout.setError(state.isValidEmail == false) {
                 getString(R.string.error_message_email_invalid)
             }
@@ -70,10 +80,6 @@ class SignUpFragment : Fragment() {
             confirmPasswordTextInputLayout.setError(state.isValidConfirmPassword == false) {
                 getString(R.string.message_password_mismatched)
             }
-        }
-
-        if (state.isLoggedIn) {
-            navigateToOtpScreen()
         }
 
         val errorMessage = state.errorMessage
@@ -89,10 +95,6 @@ class SignUpFragment : Fragment() {
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state -> signUpStateHandler(state) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
-    }
-
-    private fun navigateToOtpScreen() {
-
     }
 
     private fun navigateBack() {

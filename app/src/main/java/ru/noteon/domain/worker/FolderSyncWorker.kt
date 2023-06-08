@@ -1,4 +1,4 @@
-package ru.noteon.core.worker
+package ru.noteon.domain.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -7,8 +7,8 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
-import ru.noteon.core.task.FolderTaskManager
-import ru.noteon.core.task.TaskState
+import ru.noteon.domain.task.FolderTaskManager
+import ru.noteon.domain.task.TaskState
 import ru.noteon.core.utils.Either
 import ru.noteon.data.repository.LocalFolderRepository
 import ru.noteon.data.repository.RemoteFolderRepository

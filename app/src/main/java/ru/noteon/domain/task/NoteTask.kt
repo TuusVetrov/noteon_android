@@ -1,4 +1,4 @@
-package ru.noteon.core.task
+package ru.noteon.domain.task
 
 class NoteTask private constructor(val noteId: String, val action: TaskAction) {
     companion object {

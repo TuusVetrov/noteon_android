@@ -6,8 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ru.noteon.core.task.FolderTaskManager
-import ru.noteon.core.task.TaskManager
+import ru.noteon.domain.task.FolderTaskManager
+import ru.noteon.domain.task.TaskManager
 
 @Module
 @InstallIn(SingletonComponent::class)

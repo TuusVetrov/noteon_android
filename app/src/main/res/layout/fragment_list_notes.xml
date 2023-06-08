@@ -17,9 +17,10 @@
             android:layout_height="wrap_content"
             app:titleTextAppearance="@style/TextAppearance.H2"
             android:elevation="@dimen/normal_8"
+            app:title="Folder name"
             app:navigationIcon="@drawable/ic_arrow_back"
             app:navigationIconTint="?attr/colorOnSurface"
-            app:menu="@menu/main_menu"
+            app:menu="@menu/list_notes_menu"
             />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -51,10 +52,12 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:ignore="PrivateResource"
             >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvNotes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/note_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 

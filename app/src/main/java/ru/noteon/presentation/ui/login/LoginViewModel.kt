@@ -5,17 +5,16 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.noteon.core.token.TokenManager
-import ru.noteon.data.repository.UserRepository
+import ru.noteon.data.repository.RemoteUserRepository
 import ru.noteon.utils.validators.AuthValidator
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: UserRepository,
+    private val repository: RemoteUserRepository,
     private val tokenManager: TokenManager,
 ): ViewModel() {
     private val _uiState = MutableStateFlow(LoginState.init)
@@ -59,7 +58,7 @@ class LoginViewModel @Inject constructor(
             val email = uiState.value.email
             val password = uiState.value.password
 
-            val response = repository.getUserByEmailAndPassword(email, password)
+            val response = repository.login(email, password)
 
             response.onSuccess { authCredential ->
                 tokenManager.saveTokens(authCredential.accessToken, authCredential.refreshToken)

@@ -9,14 +9,15 @@ import ru.noteon.data.local.dao.NotesDao
 import ru.noteon.data.remote.api.AuthService
 import ru.noteon.data.remote.api.FoldersService
 import ru.noteon.data.remote.api.NoteService
+import ru.noteon.data.remote.api.UserService
 import ru.noteon.data.repository.*
 
 @Module
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
     @Provides
-    fun authRepository(authService: AuthService): UserRepository {
-        return UserRepository(authService)
+    fun authRepository(authService: AuthService, userService: UserService): RemoteUserRepository {
+        return RemoteUserRepository(authService, userService)
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package ru.noteon.core.worker
+package ru.noteon.domain.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -7,7 +7,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
-import ru.noteon.core.task.FolderTaskAction
+import ru.noteon.domain.task.FolderTaskAction
 import ru.noteon.core.utils.Either
 import ru.noteon.core.utils.extensions.getEnum
 import ru.noteon.data.repository.LocalFolderRepository
@@ -63,7 +63,9 @@ class FolderTaskWorker @AssistedInject constructor(
     private fun getFolderId(): String = inputData.getString(KEY_FOLDER_ID)
         ?: throw IllegalStateException("$KEY_FOLDER_ID should be provided as input data.")
 
-    private fun getTaskAction(): FolderTaskAction = inputData.getEnum<FolderTaskAction>(KEY_TASK_TYPE)
+    private fun getTaskAction(): FolderTaskAction = inputData.getEnum<FolderTaskAction>(
+        KEY_TASK_TYPE
+    )
         ?: throw IllegalStateException("${TaskWorker.KEY_TASK_TYPE} should be provided as input data.")
 
     companion object {

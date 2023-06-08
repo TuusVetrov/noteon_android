@@ -55,6 +55,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.5.1"
     implementation 'androidx.room:room-ktx:2.5.1'
 
+    implementation 'io.github.elye:loaderviewlibrary:3.0.0'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.hilt:hilt-common:1.0.0'

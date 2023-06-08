@@ -1,4 +1,4 @@
-package ru.noteon.core.task
+package ru.noteon.domain.task
 
 enum class TaskState {
     SCHEDULED, CANCELLED, FAILED, COMPLETED;

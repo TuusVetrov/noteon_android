@@ -3,13 +3,16 @@ package ru.noteon.presentation.ui.list_notes
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,6 +24,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -48,6 +52,8 @@ class ListNotesFragment : Fragment() {
         } ?: throw IllegalStateException("'folderId' shouldn't be null")
     }
 
+    private lateinit var createDialog: AlertDialog
+
     private val notesAdapter by lazy { NotesListAdapter(::onPinClicked, ::onNoteClicked) }
 
     override fun onCreateView(
@@ -56,6 +62,7 @@ class ListNotesFragment : Fragment() {
     ): View {
         binding = FragmentListNotesBinding.inflate(inflater, container, false)
         binding.mainToolbar.title = args.folderName ?: ""
+        initInputDialog()
         return binding.root
     }
 
@@ -65,6 +72,37 @@ class ListNotesFragment : Fragment() {
         initElements()
         observeState()
         setupToolbar()
+    }
+
+    private fun initInputDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.rename_folder_dialog, null)
+
+        val inputText: TextInputEditText = dialogView.findViewById(R.id.folderNameTextInput)
+        val btnCancel: Button = dialogView.findViewById(R.id.btnCancel)
+        val btnUpdate: Button = dialogView.findViewById(R.id.btnCreate)
+
+        builder.setView(dialogView)
+
+        createDialog = builder.create()
+
+        btnUpdate.isEnabled = false
+        inputText.setText(args.folderName)
+
+        inputText.addTextChangedListener {
+            btnUpdate.isEnabled = it.toString().trim().isNotEmpty()
+        }
+
+        btnCancel.setOnClickListener {
+            inputText.text?.clear()
+            createDialog.hide()
+        }
+
+        btnUpdate.setOnClickListener {
+            viewModel.updateFolderName(inputText.text.toString())
+            inputText.text?.clear()
+            createDialog.hide()
+        }
     }
 
     private fun initElements() {
@@ -116,7 +154,22 @@ class ListNotesFragment : Fragment() {
                 findNavController().navigateUp()
             }
 
+            mainToolbar.setOnMenuItemClickListener {menuItem ->
+                when (menuItem.itemId) {
+                    R.id.editFolderName -> {
+                        createDialog.show()
+                        true
+                    }
+                    R.id.account -> {
+                        findNavController().navigate(R.id.action_listNotesFragment_to_settingsFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
             val item = mainToolbar.menu.findItem(R.id.search)
+
             val searchView = item.actionView as SearchView
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

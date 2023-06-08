@@ -24,7 +24,7 @@ class RemoteFolderRepository(
         }
 
         emit(state)
-    }.catch { emit(Either.error("Can't sync latest notes")) }
+    }.catch { emit(Either.error("Не удается синхронизировать последние заметки")) }
 
     suspend fun addFolder(folderName: String): Either<String> {
         return runCatching {
@@ -36,7 +36,7 @@ class RemoteFolderRepository(
             }
         }.getOrElse {
             it.printStackTrace()
-            (Either.error("Something went wrong!"))
+            (Either.error("Что-то пошло не так!"))
         }
     }
 
@@ -54,7 +54,7 @@ class RemoteFolderRepository(
                 State.SUCCESS -> Either.success(foldersResponse.folderId!!)
                 else -> Either.error(foldersResponse.message)
             }
-        }.getOrDefault(Either.error("Something went wrong!"))
+        }.getOrDefault(Either.error("Что-то пошло не так!"))
     }
 
     suspend fun deleteFolder(folderId: String): Either<String> {
@@ -65,6 +65,6 @@ class RemoteFolderRepository(
                 State.SUCCESS -> Either.success(folderResponse.folderId!!)
                 else -> Either.error(folderResponse.message)
             }
-        }.getOrDefault(Either.error("Something went wrong!"))
+        }.getOrDefault(Either.error("Что-то пошло не так!"))
     }
 }

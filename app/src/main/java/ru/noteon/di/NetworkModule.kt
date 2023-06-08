@@ -12,6 +12,7 @@ import ru.noteon.data.remote.Constants
 import ru.noteon.data.remote.api.AuthService
 import ru.noteon.data.remote.api.FoldersService
 import ru.noteon.data.remote.api.NoteService
+import ru.noteon.data.remote.api.UserService
 import ru.noteon.data.remote.interceptor.AuthInterceptor
 import java.util.concurrent.TimeUnit
 
@@ -41,6 +42,14 @@ class NetworkModule {
             .client(okHttpClientBuilder.addInterceptor(authInterceptor).build())
             .build()
             .create(FoldersService::class.java)
+    }
+
+    @Provides
+    fun provideUserService(authInterceptor: AuthInterceptor): UserService {
+        return baseRetrofitBuilder
+            .client(okHttpClientBuilder.addInterceptor(authInterceptor).build())
+            .build()
+            .create(UserService::class.java)
     }
 
     @Provides

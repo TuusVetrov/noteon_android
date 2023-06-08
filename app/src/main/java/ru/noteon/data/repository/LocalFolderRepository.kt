@@ -8,7 +8,7 @@ import ru.noteon.domain.model.FolderModel
 import java.util.*
 import javax.inject.Inject
 
-class LocalFolderRepository@Inject constructor(
+class LocalFolderRepository @Inject constructor(
     private val foldersDao: FolderDao
 ) {
     companion object {
@@ -41,7 +41,7 @@ class LocalFolderRepository@Inject constructor(
             )
         )
         Either.success(tmpFolderId)
-    }.getOrDefault(Either.error("Unable to create a new note"))
+    }.getOrDefault(Either.error("Невозможно создать новую папку"))
 
     suspend fun addFolders(folders: List<FolderModel>) = folders.map {
         FolderEntity(it.id, it.folderName)
@@ -55,12 +55,12 @@ class LocalFolderRepository@Inject constructor(
     ): Either<String> = runCatching {
         foldersDao.updateFolderById(folderId, folderName)
         Either.success(folderId)
-    }.getOrDefault(Either.error("Unable to update a note"))
+    }.getOrDefault(Either.error("Не удалось обновить папку"))
 
     suspend fun deleteFolder(noteId: String): Either<String> = runCatching {
         foldersDao.deleteFolderById(noteId)
         Either.success(noteId)
-    }.getOrDefault(Either.error("Unable to delete a note"))
+    }.getOrDefault(Either.error("Не удалось удалить папку"))
 
     suspend fun updateFolderId(oldNoteId: String, newNoteId: String) =
         foldersDao.updateFolderId(oldNoteId, newNoteId)

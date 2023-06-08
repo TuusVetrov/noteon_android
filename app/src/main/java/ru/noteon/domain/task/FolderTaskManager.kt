@@ -1,4 +1,4 @@
-package ru.noteon.core.task
+package ru.noteon.domain.task
 
 import androidx.lifecycle.asFlow
 import androidx.work.*
@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformWhile
 import ru.noteon.core.utils.extensions.putEnum
-import ru.noteon.core.worker.FolderSyncWorker
-import ru.noteon.core.worker.FolderTaskWorker
-import ru.noteon.core.worker.TaskWorker
+import ru.noteon.domain.worker.FolderSyncWorker
+import ru.noteon.domain.worker.FolderTaskWorker
+import ru.noteon.domain.worker.TaskWorker
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

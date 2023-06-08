@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import ru.noteon.data.remote.model.request.AuthRequest
+import ru.noteon.data.remote.model.request.RegistrationRequest
 import ru.noteon.data.remote.model.response.AuthResponse
 
 interface AuthService {
@@ -13,7 +14,7 @@ interface AuthService {
     suspend fun login(@Body authRequest: AuthRequest): Response<AuthResponse>
 
     @POST("auth/register")
-    suspend fun register(@Body authRequest: AuthRequest): Response<AuthResponse>
+    suspend fun register(@Body authRequest: RegistrationRequest): Response<AuthResponse>
 
     @GET("auth/refaresh-token")
     suspend fun refreshToken(@Header("Authorization") token: String): Response<AuthResponse>

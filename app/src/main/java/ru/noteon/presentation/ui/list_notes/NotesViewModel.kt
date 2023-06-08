@@ -14,17 +14,18 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.noteon.core.connectivity.ConnectionState
 import ru.noteon.core.connectivity.ConnectivityObserver
-import ru.noteon.core.task.NoteTask
-import ru.noteon.core.task.TaskManager
-import ru.noteon.core.task.TaskState
 import ru.noteon.core.token.TokenManager
+import ru.noteon.data.repository.LocalFolderRepository
 import ru.noteon.data.repository.LocalNoteRepository
 import ru.noteon.domain.model.NoteModel
+import ru.noteon.domain.task.*
 
 class NotesViewModel @AssistedInject constructor(
     private val noteRepository: LocalNoteRepository,
+    private val folderRepository: LocalFolderRepository,
     private val tokenManager: TokenManager,
     private val taskManager: TaskManager,
+    private val folderTaskManager: FolderTaskManager,
     private val connectivityObserver: ConnectivityObserver,
     @Assisted private val folderId: String
 ): ViewModel() {
@@ -39,6 +40,25 @@ class NotesViewModel @AssistedInject constructor(
         observeNotes()
         syncNotes()
         observeConnectivity()
+    }
+
+    fun updateFolderName(newFolderName: String) {
+        job?.cancel()
+        job = viewModelScope.launch {
+            val response = folderRepository.updateFolder(folderId, newFolderName)
+
+            response.onSuccess { folderId ->
+                if (!folderRepository.isTemporaryFolder(folderId)) {
+                    scheduleFolderUpdate()
+                }
+            }.onFailure { message ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        error = message,
+                    )
+                }
+            }
+        }
     }
 
     fun searchNote(searchQuery: String): LiveData<List<NoteModel>> {
@@ -142,6 +162,9 @@ class NotesViewModel @AssistedInject constructor(
 
     private fun scheduleNoteUpdatePin(noteId: String) =
         taskManager.scheduleTask(NoteTask.pin(noteId))
+
+    private fun scheduleFolderUpdate() =
+        folderTaskManager.scheduleTask(FolderTask.update(folderId))
 
     private fun observeNotes() {
         noteRepository.getAllNotesFromFolderId(folderId)

@@ -65,25 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/normal_200"
         android:text="@string/continue_button"
-        app:layout_constraintBottom_toTopOf="@+id/forgotPasswordButton"
+        app:layout_constraintBottom_toTopOf="@+id/createNewAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout" />
-
-    <Button
-        android:id="@+id/forgotPasswordButton"
-        style="@style/Theme.NoteOn.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/normal_100"
-        android:text="@string/forgot_password_button_text"
-        app:layout_constraintBottom_toTopOf="@+id/createNewAccountButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/continueButton" />
 
     <Button
         android:id="@+id/createNewAccountButton"

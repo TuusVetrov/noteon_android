@@ -54,7 +54,7 @@ class LocalNoteRepository @Inject constructor(
             )
         )
         Either.success(tmpNoteId)
-    }.getOrDefault(Either.error("Unable to create a new note"))
+    }.getOrDefault(Either.error("Невозможно создать новую заметку"))
 
     suspend fun addNotes(notes: List<NoteModel>) = notes.map {
         NoteEntity(it.id, it.title, it.body, it.created, it.isPinned, it.folder)
@@ -82,18 +82,18 @@ class LocalNoteRepository @Inject constructor(
     ): Either<String> = runCatching {
         notesDao.updateNoteById(noteId, folderId, title, note)
         Either.success(noteId)
-    }.getOrDefault(Either.error("Unable to update a note"))
+    }.getOrDefault(Either.error("Не удалось обновить заметку"))
 
 
     suspend fun deleteNote(noteId: String): Either<String> = runCatching {
         notesDao.deleteNoteById(noteId)
         Either.success(noteId)
-    }.getOrDefault(Either.error("Unable to delete a note"))
+    }.getOrDefault(Either.error("Не удалось удалить заметку"))
 
     suspend fun pinNote(noteId: String, isPinned: Boolean): Either<String> = runCatching {
         notesDao.updateNotePin(noteId, isPinned)
         Either.success(noteId)
-    }.getOrDefault(Either.error("Unable to pin the note"))
+    }.getOrDefault(Either.error("Не удалось закрепить заметку"))
 
     suspend fun deleteAllNotes() = notesDao.deleteAllNotes()
 

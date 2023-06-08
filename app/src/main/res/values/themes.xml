@@ -37,6 +37,7 @@
         <item name="textInputStyle">@style/Theme.NoteOn.TextInputLayout</item>
 
         <item name="android:statusBarColor">@color/light_surface</item>
+        <item name="android:navigationBarColor">@color/light_surface</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

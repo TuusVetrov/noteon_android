@@ -12,19 +12,18 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.noteon.core.task.NoteTask
-import ru.noteon.core.task.TaskManager
+import ru.noteon.data.repository.LocalFolderRepository
+import ru.noteon.domain.task.NoteTask
+import ru.noteon.domain.task.TaskManager
 import ru.noteon.data.repository.LocalNoteRepository
 import ru.noteon.domain.model.NoteModel
 import javax.inject.Inject
 
 class EditNoteViewModel @AssistedInject constructor(
     private val repository: LocalNoteRepository,
+    private val foldersRepository: LocalFolderRepository,
     private val taskManager: TaskManager,
     @Assisted private val noteId: String
 ): ViewModel() {
@@ -36,7 +35,9 @@ class EditNoteViewModel @AssistedInject constructor(
 
     init {
         loadNote()
+        observeFolders()
     }
+
 
     fun setTitle(title: String) {
         _uiState.update { currentState ->
@@ -60,6 +61,27 @@ class EditNoteViewModel @AssistedInject constructor(
                 folder = folder
             )
         }
+    }
+
+
+    private fun observeFolders() {
+        foldersRepository.getAllFolders()
+            .distinctUntilChanged()
+            .onEach { response ->
+                response.onSuccess { folders ->
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            folders = folders
+                        )
+                    }
+                }.onFailure { message ->
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            error = message
+                        )
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 
     private fun loadNote() {
@@ -97,13 +119,10 @@ class EditNoteViewModel @AssistedInject constructor(
         job?.cancel()
         job = viewModelScope.launch {
             val response = repository.updateNote(noteId, title, body, folder)
-            Log.d("shouldReplaceNote" ,"!response")
             response.onSuccess { noteId ->
-                Log.d("shouldReplaceNote" ,"!response")
                 if (repository.isTemporaryNote(noteId)) {
                     scheduleNoteCreate(noteId)
                 } else {
-                    Log.d("shouldReplaceNote" ,"!isTemporaryNote")
                     scheduleNoteUpdate(noteId)
                 }
                 _uiState.update { currentState ->
@@ -112,7 +131,6 @@ class EditNoteViewModel @AssistedInject constructor(
                     )
                 }
             }.onFailure { message ->
-                Log.d("shouldReplaceNote", message)
                 _uiState.update { currentState ->
                     currentState.copy(
                         error = message,

@@ -118,8 +118,11 @@ class FoldersListFragment : Fragment() {
 
         createDialog = builder.create()
 
+        btnCreate.isEnabled = false
+
         inputText.addTextChangedListener {
-            btnCreate.isClickable = it.toString().trim().isNotEmpty()
+            btnCreate.isEnabled = it.toString().trim().isNotEmpty()
+           // btnCreate.isClickable = it.toString().trim().isNotEmpty()
         }
 
         btnCancel.setOnClickListener {
@@ -138,6 +141,17 @@ class FoldersListFragment : Fragment() {
         with(binding) {
             val item = mainToolbar.menu.findItem(R.id.search)
             val searchView = item.actionView as SearchView
+
+
+            mainToolbar.setOnMenuItemClickListener {menuItem ->
+                when (menuItem.itemId) {
+                    R.id.account -> {
+                        findNavController().navigate(R.id.action_foldersListFragment_to_settingsFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -182,7 +196,7 @@ class FoldersListFragment : Fragment() {
         val errorMessage = state.error
         if (errorMessage != null) {
             val message = getString(R.string.error_loading_title) + "\n" + errorMessage
-            snackBar(message)
+           // snackBar(message)
         }
 
         val isConnectivityAvailable = state.isConnectivityAvailable

@@ -8,13 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.noteon.core.token.TokenManager
-import ru.noteon.data.repository.UserRepository
+import ru.noteon.data.repository.RemoteUserRepository
 import ru.noteon.utils.validators.AuthValidator
+import ru.noteon.utils.validators.UserDataValidator
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: UserRepository,
+    private val repository: RemoteUserRepository,
     private val tokenManager: TokenManager,
 ): ViewModel() {
     private val _uiState = MutableStateFlow(SignUpState.init)
@@ -32,6 +33,14 @@ class SignUpViewModel @Inject constructor(
         _uiState.update { currentState ->
             currentState.copy(
                 password = password
+            )
+        }
+    }
+
+    fun setUsername(username: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                username = username
             )
         }
     }
@@ -63,10 +72,11 @@ class SignUpViewModel @Inject constructor(
                 )
             }
 
+            val username = uiState.value.username
             val email = uiState.value.email
             val password = uiState.value.password
 
-            val response = repository.addUser(email, password)
+            val response = repository.registration(username, email, password)
 
             response.onSuccess { authCredential ->
                 tokenManager.saveTokens(authCredential.accessToken, authCredential.refreshToken)
@@ -91,9 +101,12 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun validateCredentials(): Boolean {
+        val username = uiState.value.username
         val email = uiState.value.email
         val password = uiState.value.password
         val confirmPassword = uiState.value.confirmPassword
+
+        val isValidUsername = UserDataValidator.isValidUsername(username)
 
         val isValidEmail = AuthValidator.isValidEmail(email)
         val isValidPassword = AuthValidator.isValidPassword(password)
@@ -104,12 +117,13 @@ class SignUpViewModel @Inject constructor(
 
         _uiState.update { currentState ->
             currentState.copy(
+                isValidUsername = isValidUsername,
                 isValidEmail = isValidEmail,
                 isValidPassword = isValidPassword,
                 isValidConfirmPassword = arePasswordAndConfirmPasswordSame
             )
         }
 
-        return isValidEmail && isValidPassword && arePasswordAndConfirmPasswordSame
+        return isValidEmail && isValidPassword && arePasswordAndConfirmPasswordSame && isValidUsername
     }
 }

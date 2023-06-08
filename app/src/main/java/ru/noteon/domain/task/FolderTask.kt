@@ -1,4 +1,4 @@
-package ru.noteon.core.task
+package ru.noteon.domain.task
 
 class FolderTask private constructor(val folderId: String, val action: FolderTaskAction) {
     companion object {

@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.noteon.core.task.NoteTask
-import ru.noteon.core.task.TaskManager
+import ru.noteon.domain.task.NoteTask
+import ru.noteon.domain.task.TaskManager
 import ru.noteon.data.repository.LocalNoteRepository
 import ru.noteon.utils.validators.NoteValidator
 import javax.inject.Inject

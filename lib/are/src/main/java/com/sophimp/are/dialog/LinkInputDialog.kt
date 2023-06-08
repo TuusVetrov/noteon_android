@@ -4,11 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import com.sophimp.are.R
 import com.sophimp.are.databinding.DialogLinkInputBinding
 
@@ -77,12 +79,13 @@ class LinkInputDialog(context: Context) : Dialog(context, androidx.appcompat.R.s
         return this
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun updateConfirmBtnState() {
         if (TextUtils.isEmpty(binding.etLinkAddr.text)) {
-            binding.iclTitle.tvBtnConfirm.setTextColor(Color.parseColor("#4d3c3c43"))
+            binding.iclTitle.tvBtnConfirm.setTextColor(context.getColor(R.color.outline))
             binding.iclTitle.tvBtnConfirm.isEnabled = false
         } else {
-            binding.iclTitle.tvBtnConfirm.setTextColor(Color.parseColor("#ff2899fb"))
+            binding.iclTitle.tvBtnConfirm.setTextColor(context.getColor(R.color.primary))
             binding.iclTitle.tvBtnConfirm.isEnabled = true
         }
     }

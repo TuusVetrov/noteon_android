@@ -22,4 +22,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideFoldersDao(database: Database) = database.getFoldersDao()
+
+    @Singleton
+    @Provides
+    fun provideUserDao(database: Database) = database.getUserDao()
 }

@@ -11,10 +11,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.noteon.core.connectivity.ConnectionState
 import ru.noteon.core.connectivity.ConnectivityObserver
-import ru.noteon.core.task.*
 import ru.noteon.core.token.TokenManager
 import ru.noteon.data.repository.LocalFolderRepository
 import ru.noteon.domain.model.FolderModel
+import ru.noteon.domain.task.FolderTask
+import ru.noteon.domain.task.FolderTaskManager
+import ru.noteon.domain.task.TaskState
 import javax.inject.Inject
 
 @HiltViewModel

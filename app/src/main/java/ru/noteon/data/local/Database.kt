@@ -5,17 +5,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.noteon.data.local.dao.FolderDao
 import ru.noteon.data.local.dao.NotesDao
+import ru.noteon.data.local.dao.UserDao
 import ru.noteon.data.local.entity.FolderEntity
 import ru.noteon.data.local.entity.NoteEntity
+import ru.noteon.data.local.entity.UserEntity
 
 @androidx.room.Database(
-    entities = [NoteEntity::class, FolderEntity::class],
+    entities = [NoteEntity::class, FolderEntity::class, UserEntity::class],
     version = 1
 )
 abstract class Database: RoomDatabase() {
     abstract fun getNotesDao(): NotesDao
 
     abstract fun getFoldersDao(): FolderDao
+
+    abstract fun getUserDao(): UserDao
 
     companion object {
         private const val DB_NAME = "noteon_database"

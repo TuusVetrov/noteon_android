@@ -10,7 +10,7 @@ class TokenManager(
         private const val REFRESH_TOKEN_KEY = "refresh_token"
     }
 
-    fun saveTokens(accessToken: String, refreshToken: String) {
+    fun saveTokens(accessToken: String?, refreshToken: String?) {
         sharedPreferences.edit(commit = true) {
             putString(ACCESS_TOKEN_KEY, accessToken)
             putString(REFRESH_TOKEN_KEY, refreshToken)

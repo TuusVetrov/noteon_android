@@ -44,9 +44,6 @@
         android:label="fragment_list_notes"
         tools:layout="@layout/fragment_list_notes" >
         <action
-            android:id="@+id/action_listNotesFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
             android:id="@+id/action_listNotesFragment_to_createNoteFragment"
             app:destination="@id/createNoteFragment" />
         <action
@@ -60,6 +57,9 @@
             android:name="folderName"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_listNotesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
@@ -88,5 +88,32 @@
         <action
             android:id="@+id/action_foldersListFragment_to_listNotesFragment"
             app:destination="@id/listNotesFragment" />
+        <action
+            android:id="@+id/action_foldersListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ru.noteon.presentation.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeUserDataFragment"
+            app:destination="@id/changeUserDataFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="ru.noteon.presentation.ui.change_password.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/changeUserDataFragment"
+        android:name="ru.noteon.presentation.ui.change_user_data.ChangeUserDataFragment"
+        android:label="ChangeUserDataFragment" />
 </navigation>

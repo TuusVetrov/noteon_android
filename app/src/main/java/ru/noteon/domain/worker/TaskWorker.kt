@@ -1,4 +1,4 @@
-package ru.noteon.core.worker
+package ru.noteon.domain.worker
 
 import android.content.Context
 import android.util.Log
@@ -8,7 +8,7 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
-import ru.noteon.core.task.TaskAction
+import ru.noteon.domain.task.TaskAction
 import ru.noteon.core.utils.Either
 import ru.noteon.core.utils.extensions.getEnum
 import ru.noteon.data.repository.LocalNoteRepository

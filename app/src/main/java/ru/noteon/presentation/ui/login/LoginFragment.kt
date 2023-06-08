@@ -72,7 +72,6 @@ class LoginFragment : Fragment() {
             }
         }
 
-        binding.forgotPasswordButton.setOnClickListener { navigateToForgotPasswordScreen() }
         binding.createNewAccountButton.setOnClickListener { navigateToSignUpScreen() }
     }
 
@@ -108,9 +107,5 @@ class LoginFragment : Fragment() {
 
     private fun navigateToSignUpScreen() {
         findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-    }
-
-    private fun navigateToForgotPasswordScreen() {
-
     }
 }
